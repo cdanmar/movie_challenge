@@ -16,6 +16,7 @@ class MovieLoader
       rating_time_array = rating_time_stripped.split(" , ")
       time = rating_time_array.last
       rating = rating_time_array.first
+      start_time = 
 
       collection << {
                       title: title,

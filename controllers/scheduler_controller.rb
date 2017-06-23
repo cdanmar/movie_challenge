@@ -1,4 +1,5 @@
 require_relative '../config/ruby_manifest.rb'
+require 'chronic'
 
 class SchedulerController
   attr_reader :load_view, :runner_view, :movie_loader, :today
@@ -17,6 +18,7 @@ class SchedulerController
     load_view.ask_to_reload(today)
     reload_input = gets.chomp
 
+
     if reload_input == 'yes'
       movie_loader.compile_todays_list
       load_view.finished
@@ -27,6 +29,18 @@ class SchedulerController
 
       runner_view.ask_if_user_is_finished
       user_choice = gets.chomp
+
+      if user_choice == 'all'
+        file = File.read('movie_list.json')
+        data_hash = JSON.parse(file)
+        p data_hash[1]["title"]
+        data_hash.each do |movie|
+          puts movie["title"]
+          sexy_time = movie["time"]
+          result = sexy_time.gsub(/[^\d]/, ' ')
+          puts result
+        end
+      end
 
       if user_choice == 'end'
         exit_program 
